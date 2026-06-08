@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-black text-white font-sans;
+  }
+
+  ::selection {
+    @apply bg-gold/30 text-white;
+  }
+}
+
+@layer components {
+  .skeleton {
+    @apply bg-grey-mid animate-skeleton-pulse rounded;
+  }
+}
