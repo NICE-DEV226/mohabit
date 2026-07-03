@@ -14,20 +14,24 @@ export const authOptions: NextAuthOptions = {
         if (!credentials?.email || !credentials?.password) return null
 
         const adminEmail = process.env.ADMIN_EMAIL || ''
-        const adminPassword = process.env.ADMIN_PASSWORD || ''
+        // Hash bcrypt du mot de passe admin (recommandé — voir /api/auth/register).
+        const adminPasswordHash = process.env.ADMIN_PASSWORD_HASH || ''
+        // Fallback en clair (dev uniquement) si aucun hash n'est configuré.
+        const adminPasswordPlain = process.env.ADMIN_PASSWORD || ''
 
-        if (
-          credentials.email === adminEmail &&
-          bcrypt.compareSync(credentials.password, bcrypt.hashSync(adminPassword, 10))
-        ) {
-          return {
-            id: '1',
-            name: 'Administrateur',
-            email: adminEmail,
-          }
+        if (credentials.email !== adminEmail) return null
+
+        const passwordOk = adminPasswordHash
+          ? bcrypt.compareSync(credentials.password, adminPasswordHash)
+          : Boolean(adminPasswordPlain) && credentials.password === adminPasswordPlain
+
+        if (!passwordOk) return null
+
+        return {
+          id: '1',
+          name: 'Administrateur',
+          email: adminEmail,
         }
-
-        return null
       },
     }),
   ],

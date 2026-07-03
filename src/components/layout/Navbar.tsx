@@ -3,12 +3,9 @@
 import { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
 import Button from '@/components/ui/Button'
+import { siteConfig } from '@/config/site'
 
-const products = [
-  { href: '/catalogue', label: 'Voir tout le catalogue' },
-  { href: '/catalogue?type=plain-pied', label: 'Modèles plain-pied' },
-  { href: '/catalogue?type=etage', label: 'Modèles à étage' },
-]
+const products = siteConfig.nav.catalogueDropdown
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -31,9 +28,9 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3">
-            <img src="/logo.jpeg" alt="Modu Habitat" className="h-9 w-auto" />
-            <span className="font-display text-xl tracking-wider text-white">
-              MODU HABITAT
+            <img src={siteConfig.brand.logo} alt={siteConfig.brand.name} className="h-9 w-auto" />
+            <span className="font-display text-xl tracking-wider text-white uppercase">
+              {siteConfig.brand.name}
             </span>
           </Link>
 
@@ -84,8 +81,8 @@ export default function Navbar() {
               </Link>
             </li>
             <li className="ml-4">
-              <Button href="/contact" size="sm">
-                Demander un devis
+              <Button href={siteConfig.nav.cta.href} size="sm">
+                {siteConfig.nav.cta.label}
               </Button>
             </li>
           </ul>
@@ -124,8 +121,8 @@ export default function Navbar() {
             <MobileLink href="/contact" label="Contact" onClick={() => setMenuOpen(false)} />
           </div>
           <div className="pt-4">
-            <Button href="/contact" size="md" className="w-full justify-center" onClick={() => setMenuOpen(false)}>
-              Demander un devis
+            <Button href={siteConfig.nav.cta.href} size="md" className="w-full justify-center" onClick={() => setMenuOpen(false)}>
+              {siteConfig.nav.cta.label}
             </Button>
           </div>
         </div>

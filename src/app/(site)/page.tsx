@@ -1,5 +1,7 @@
 import Link from 'next/link'
 import Button from '@/components/ui/Button'
+import { waLink } from '@/lib/whatsapp'
+import { siteConfig } from '@/config/site'
 
 export default function HomePage() {
   return (
@@ -210,7 +212,7 @@ export default function HomePage() {
               Envoyer une demande
             </Button>
             <Button
-              href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP || '22670000000'}?text=${encodeURIComponent('Bonjour Modu Habitat, je souhaite un devis.')}`}
+              href={waLink(siteConfig.whatsapp.quoteMessage)}
               external
               size="lg"
               className="border-2 border-black/20 text-black hover:border-black/40 bg-transparent"

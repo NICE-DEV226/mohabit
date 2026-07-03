@@ -1,0 +1,90 @@
+# ⚙️ CONFIG UNIQUE DU SITE — édite CE fichier pour adapter le site à un client.
+# Généré en TS au build par scripts/gen-site-config.mjs (npm run gen:config,
+# lancé automatiquement avant `dev` et `build`). Ne touche pas au TS généré.
+#
+# Secrets (MongoDB, auth, WhatsApp API) → .env.local, jamais ici.
+# Couleurs / polices → src/config/theme.ts.
+# Produits du catalogue → src/data/models.ts.
+
+# ── Identité de marque ──────────────────────────────────────
+brand:
+  name: Modu Habitat
+  legalName: Modu Habitat International
+  logo: /logo.jpeg
+  tagline: Construire autrement.
+  pitch: >-
+    Maisons en acier, conteneurs de vie et construction modulaire à Ouagadougou.
+    Construire autrement au Burkina Faso.
+  description: >-
+    Construction modulaire haut de gamme à Ouagadougou. Maisons en acier,
+    conteneurs de vie et modules préfabriqués pour des projets résidentiels et
+    commerciaux.
+
+# ── Coordonnées de contact ──────────────────────────────────
+contact:
+  phoneDisplay: "+226 XX XX XX XX"
+  # Numéro WhatsApp (international, sans +) utilisé si NEXT_PUBLIC_WHATSAPP absent
+  whatsappFallback: "22670000000"
+  email: contact@moduhabitat.com
+  address: Ouagadougou, Burkina Faso
+  city: Ouagadougou
+  country: Burkina Faso
+  mapsLink: https://maps.app.goo.gl/BAueDd7b5wVGiBLf6
+  mapsEmbed: https://www.google.com/maps?q=Ouagadougou+Burkina+Faso&output=embed
+  hours:
+    - day: Lundi – Vendredi
+      hours: 09h00 – 18h00
+    - day: Samedi
+      hours: 09h00 – 13h00
+    - day: Dimanche
+      hours: Fermé
+  social:
+    instagram: "#"
+    facebook: "#"
+
+# ── Terminologie du secteur ─────────────────────────────────
+catalog:
+  itemNoun: modèle
+  itemNounPlural: modèles
+  label: Catalogue
+
+# ── SEO / métadonnées ───────────────────────────────────────
+seo:
+  titleDefault: Modu Habitat | Construction Modulaire Ouagadougou
+  titleTemplate: "%s | Modu Habitat"
+  keywords:
+    - construction modulaire
+    - Ouagadougou
+    - Burkina Faso
+    - maison acier
+    - conteneur de vie
+    - modu habitat
+  lang: fr
+  ogLocale: fr_BF
+  ogTitle: Modu Habitat — Construire autrement.
+
+# ── Navigation ──────────────────────────────────────────────
+nav:
+  main:
+    - { href: /, label: Accueil }
+    - { href: /realisations, label: Réalisations }
+    - { href: /contact, label: Contact }
+  catalogueDropdown:
+    - { href: /catalogue, label: Voir tout le catalogue }
+    - { href: /catalogue?type=plain-pied, label: Modèles plain-pied }
+    - { href: /catalogue?type=etage, label: Modèles à étage }
+  cta: { href: /contact, label: Demander un devis }
+
+# ── Liens du footer (colonne "Liens") ───────────────────────
+footerLinks:
+  - { href: /maisons-acier, label: Maison en Acier }
+  - { href: /conteneur-de-vie, label: Conteneur de Vie }
+  - { href: /construction-modulaire, label: Construction Modulaire }
+  - { href: /realisations, label: Réalisations }
+  - { href: /contact, label: Contact }
+
+# ── Messages WhatsApp pré-remplis ───────────────────────────
+# {brand} et {product} sont remplacés automatiquement.
+whatsapp:
+  quoteMessage: "Bonjour {brand}, je souhaite un devis."
+  productMessageTemplate: "Bonjour {brand}, je suis intéressé par {product}. Puis-je avoir un devis ?"

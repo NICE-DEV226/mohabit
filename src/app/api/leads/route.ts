@@ -3,20 +3,37 @@ import clientPromise from '@/lib/mongodb'
 import type { Lead } from '@/types'
 import { notifyNewLead } from '@/lib/whatsapp-notify'
 
+const MAX_LEN = 2000
+
+function str(value: unknown, max = 200): string {
+  return typeof value === 'string' ? value.trim().slice(0, max) : ''
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
+
+    // Validation minimale : nom + téléphone requis (le reste optionnel).
+    const fullName = str(body.fullName, 120)
+    const phone = str(body.phone, 40)
+    if (fullName.length < 2 || phone.replace(/\D/g, '').length < 6) {
+      return NextResponse.json(
+        { success: false, error: 'Nom et téléphone valides requis' },
+        { status: 400 }
+      )
+    }
+
     const client = await clientPromise
     const db = client.db()
 
     const lead: Lead = {
-      fullName: body.fullName,
-      email: body.email,
-      phone: body.phone,
-      projectType: body.projectType,
-      budget: body.budget,
-      dimensions: body.dimensions || '',
-      description: body.description,
+      fullName,
+      email: str(body.email, 160),
+      phone,
+      projectType: str(body.projectType, 60) as Lead['projectType'],
+      budget: str(body.budget, 60),
+      dimensions: str(body.dimensions, 120),
+      description: str(body.message ?? body.description, MAX_LEN),
       status: 'new',
       createdAt: new Date(),
       updatedAt: new Date(),

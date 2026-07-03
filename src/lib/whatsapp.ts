@@ -1,9 +1,11 @@
-const PHONE = process.env.NEXT_PUBLIC_WHATSAPP || '22600000000'
+import { siteConfig } from '@/config/site'
+
+const PHONE = siteConfig.contact.whatsapp
 
 export function waLink(message: string) {
   return `https://wa.me/${PHONE}?text=${encodeURIComponent(message)}`
 }
 
 export function waMessage(product: string) {
-  return `Bonjour Modu Habitat, je suis intéressé par ${product}. Puis-je avoir un devis ?`
+  return siteConfig.whatsapp.productMessage(product)
 }

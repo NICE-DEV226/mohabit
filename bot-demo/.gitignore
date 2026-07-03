@@ -1,0 +1,6 @@
+node_modules/
+dist/
+auth_info/
+db/leads.sqlite
+.env
+*.log

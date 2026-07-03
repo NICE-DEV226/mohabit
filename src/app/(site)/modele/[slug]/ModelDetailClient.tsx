@@ -1,9 +1,11 @@
 'use client'
 
 import type { Model } from '@/data/models'
+import { getModelImages } from '@/data/images'
 import Button from '@/components/ui/Button'
 
 export default function ModelDetailClient({ model }: { model: Model }) {
+  const images = getModelImages(model)
   const waMessage = `Bonjour, je suis intéressé par le modèle ${model.ref} (${model.area}m² - ${model.bedrooms} chambres). Pouvez-vous me donner plus d'informations ?`
 
   const specs: [string, string][] = [
@@ -24,22 +26,33 @@ export default function ModelDetailClient({ model }: { model: Model }) {
     <section className="pb-16 bg-black">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-10">
-          {/* Galerie placeholder */}
+          {/* Galerie */}
           <div>
-            <div className="aspect-[4/3] bg-grey-dark rounded-xl flex items-center justify-center">
-              <svg className="w-20 h-20 text-grey-text/30" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
-            </div>
-            <div className="flex gap-3 mt-4">
-              {[1, 2, 3].map((i) => (
-                <div key={i} className="flex-1 aspect-[4/3] bg-grey-dark rounded-lg flex items-center justify-center">
-                  <svg className="w-6 h-6 text-grey-text/20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                </div>
-              ))}
-            </div>
+            {images.length > 0 ? (
+              <img
+                src={images[0]}
+                alt={model.name}
+                className="aspect-[4/3] w-full object-cover rounded-xl bg-grey-dark"
+              />
+            ) : (
+              <div className="aspect-[4/3] bg-grey-dark rounded-xl flex items-center justify-center">
+                <svg className="w-20 h-20 text-grey-text/30" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+              </div>
+            )}
+            {images.length > 1 && (
+              <div className="flex gap-3 mt-4">
+                {images.slice(1, 4).map((src, i) => (
+                  <img
+                    key={i}
+                    src={src}
+                    alt={`${model.name} ${i + 2}`}
+                    className="flex-1 aspect-[4/3] object-cover rounded-lg bg-grey-dark"
+                  />
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Infos */}

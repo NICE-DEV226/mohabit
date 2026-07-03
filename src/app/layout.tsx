@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next'
+import { siteConfig } from '@/config/site'
 import './globals.css'
 
 export const viewport: Viewport = {
@@ -8,20 +9,19 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: {
-    default: 'Modu Habitat | Construction Modulaire Ouagadougou',
-    template: '%s | Modu Habitat',
+    default: siteConfig.seo.titleDefault,
+    template: siteConfig.seo.titleTemplate,
   },
-  description:
-    'Maisons en acier, conteneurs de vie et construction modulaire à Ouagadougou. Construire autrement au Burkina Faso.',
-  keywords: ['construction modulaire', 'Ouagadougou', 'Burkina Faso', 'maison acier', 'conteneur de vie', 'modu habitat'],
+  description: siteConfig.brand.pitch,
+  keywords: [...siteConfig.seo.keywords],
   icons: {
-    icon: '/logo.jpeg',
+    icon: siteConfig.brand.logo,
   },
   openGraph: {
-    title: 'Modu Habitat — Construire autrement.',
-    description: 'Maisons en acier, conteneurs de vie et construction modulaire à Ouagadougou.',
+    title: siteConfig.seo.ogTitle,
+    description: siteConfig.brand.pitch,
     type: 'website',
-    locale: 'fr_BF',
+    locale: siteConfig.seo.ogLocale,
   },
 }
 
@@ -31,7 +31,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="fr">
+    <html lang={siteConfig.seo.lang}>
       <body>{children}</body>
     </html>
   )

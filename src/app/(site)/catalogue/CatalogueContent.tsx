@@ -4,6 +4,7 @@ import { useState, useMemo, useEffect } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { models, bedroomCounts, areaRanges } from '@/data/models'
+import { getModelImages } from '@/data/images'
 
 export default function CatalogueContent() {
   const searchParams = useSearchParams()
@@ -85,20 +86,31 @@ export default function CatalogueContent() {
       <section className="pb-20 bg-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filtered.map((m) => (
+            {filtered.map((m) => {
+              const cover = getModelImages(m)[0]
+              return (
               <Link
                 key={m.ref}
                 href={`/modele/${m.slug}`}
                 className="group bg-grey-dark rounded-xl overflow-hidden hover:bg-grey-mid transition-all duration-200 hover:-translate-y-1"
               >
-                <div className="h-48 bg-gradient-to-br from-gold/10 to-black flex items-center justify-center relative">
-                  <svg className="w-16 h-16 text-gold/30 group-hover:text-gold/50 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={0.5} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                  </svg>
-                  <span className="absolute top-3 left-3 bg-gold text-black text-xs font-bold px-2.5 py-1 rounded-md">
+                <div className="h-48 bg-gradient-to-br from-gold/10 to-black flex items-center justify-center relative overflow-hidden">
+                  {cover ? (
+                    <img
+                      src={cover}
+                      alt={m.name}
+                      loading="lazy"
+                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                  ) : (
+                    <svg className="w-16 h-16 text-gold/30 group-hover:text-gold/50 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={0.5} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                    </svg>
+                  )}
+                  <span className="absolute top-3 left-3 z-10 bg-gold text-black text-xs font-bold px-2.5 py-1 rounded-md">
                     {m.ref}
                   </span>
-                  <span className="absolute top-3 right-3 bg-black/60 text-white text-xs px-2.5 py-1 rounded-md">
+                  <span className="absolute top-3 right-3 z-10 bg-black/60 text-white text-xs px-2.5 py-1 rounded-md">
                     {m.type === 'etage' ? 'Étage' : 'Plain-pied'}
                   </span>
                 </div>
@@ -130,7 +142,8 @@ export default function CatalogueContent() {
                   </span>
                 </div>
               </Link>
-            ))}
+              )
+            })}
           </div>
           {filtered.length === 0 && (
             <p className="text-center text-grey-text py-12">Aucun modèle ne correspond à ces critères.</p>

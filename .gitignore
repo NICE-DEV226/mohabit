@@ -28,9 +28,18 @@ yarn-error.log*
 # vercel
 .vercel
 
-# bot-demo (standalone, not part of site)
-/bot-demo/
+# bot-demo : on versionne le code, PAS les dépendances/session/secrets
+# (bot-demo/.gitignore couvre déjà ceci ; doublé ici par sécurité pour la clé)
+/bot-demo/node_modules/
+/bot-demo/dist/
+/bot-demo/auth_info/
+/bot-demo/db/leads.sqlite
+/bot-demo/.env
 
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# généré par npm run gen:config
+/src/config/site.generated.ts
+/src/data/images.generated.ts

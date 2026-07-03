@@ -1,3 +1,5 @@
+import { siteConfig } from '@/config/site'
+
 const WHATSAPP_TOKEN = process.env.WHATSAPP_API_TOKEN
 const WHATSAPP_PHONE_ID = process.env.WHATSAPP_PHONE_ID
 const TEAM_PHONE = process.env.WHATSAPP_TEAM_PHONE
@@ -27,7 +29,7 @@ export async function notifyNewLead(lead: {
   const dashboardUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000'
   const leadUrl = `${dashboardUrl}/dashboard/leads/${lead._id?.toString() || ''}`
 
-  const message = `🔔 *Nouveau Lead — Modu Habitat*
+  const message = `🔔 *Nouveau Lead — ${siteConfig.brand.name}*
 *Nom* : ${lead.fullName}
 *Tel* : ${lead.phone}
 *Projet* : ${projectLabel(lead.projectType)}${lead.budget ? `\n*Budget* : ${lead.budget}` : ''}
